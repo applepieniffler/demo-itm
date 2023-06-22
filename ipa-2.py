@@ -134,11 +134,11 @@ def shift_by_letter(letter, letter_shift):
     elif 65 <= ord(letter) <= 90 and 65 <= ord(letter_shift) <= 90:
         letter=int(ord(letter)-65)
         letter_shift=int(ord(letter_shift)-65)
-        new_str=chr(letter_shift+letter+65)
+        new_str=chr(((letter_shift+letter)%26)+65)
     else:
         new_str="error"
         
-    return(new_str)
+    return (new_str)
 
 def vigenere_cipher(message, key):
     '''Vigenere Cipher.
@@ -173,35 +173,27 @@ def vigenere_cipher(message, key):
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     
     
-    if len(key)!=len(message):
-        rep_str = (key*(len(message)//len(key)+1))[:len(message)]
+    set_message = [ord(letter) for letter in message]
+    set_key = [ord(letter) for letter in key]
     
+    cipher = ""
+    
+    for letter in range(len(message)):
+        if message[letter] == " ":
+            cipher += " "
+        elif 65 <= ord(message[letter]) <= 90:
+            cipher += chr(((set_message[letter])+(set_key[letter % len(key)]))%26+65)
+        else:
+            cipher = "error"
+    
+    a = cipher.count("error")
+    
+    if a>=1:
+        cipher_final="error"
     else:
-        rep_str = key
+        cipher_final = cipher
     
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    vigenerecipher = ""
-    
-    for i in range(len(message)):
-            letter = message[i]
-            
-            if letter != " ":
-                keyletter = rep_str[i]
-                lettershiftvalue = alphabet.index(keyletter)
-                lettervalue = alphabet.index(letter)
-                
-                if lettershiftvalue+lettervalue < 25:
-                    shiftletter = alphabet[lettershiftvalue+lettervalue]
-                    
-                elif lettershiftvalue+lettervalue > 25:
-                    shiftletter = alphabet[(lettershiftvalue+lettervalue)-26]
-                    
-            else:
-                shiftletter = " "
-            
-            vigenerecipher = vigenerecipher + shiftletter
-            
-    return vigenerecipher
+    return (cipher_final)
 
 def scytale_cipher(message, shift):
     '''Scytale Cipher.
