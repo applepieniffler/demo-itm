@@ -41,8 +41,18 @@ def relationship_status(from_member, to_member, social_graph):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
-
+    
+    o = social_graph [from_member] ["following"]
+    p = social_graph [to_member] ["following"]
+    
+    if to_member in o and from_member in p:
+        return "friends"
+    elif from_member in p:
+        return "followed by"
+    elif to_member in o:
+        return "follower"
+    else:
+        return "no relationship"
 
 def tic_tac_toe(board):
     '''Tic Tac Toe.
@@ -70,7 +80,36 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+for i in range (len(board)):
+    if all([letter == "X" for letter in board[i]]): #horizontal/row
+        answer = "X"
+        break
+    elif all([letter == "O" for letter in board[i]]):
+        answer = "O"
+        break
+    elif all([letter == "X" for letter in [board[j][i] for j in range(len(board))]]): #vertical/column
+        answer = "X"
+        break
+    elif all([letter == "O" for letter in [board[j][i] for j in range(len(board))]]):
+        answer = "O"
+        break
+    elif all([letter == "X" for letter in [board[j][j] for j in range(len(board))]]): #diagonals/slashes
+        answer = "X"
+        break
+    elif all([letter == "O" for letter in [board[j][j] for j in range(len(board))]]):
+        answer = "O"
+        break
+    elif all([letter == "X" for letter in [board[i][len(board)-i-1] for j in range(len(board))]]):
+        answer = "X"
+        break
+    elif all([letter == "O" for letter in [board[i][len(board)-i-1] for j in range(len(board))]]):
+        answer = "O"
+        break
+    else:
+        answer = "NO WINNER"
+
+    return (answer)
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
@@ -103,4 +142,24 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+    b = []
+    
+    for i in route_map:
+        a = [i[0]]
+        b += a
+        
+    first = int(b.index(first_stop))
+    second = int(b.index(second_stop))
+    
+    answer = []
+    c = len(route_map)
+    
+    if first == second:
+        answer = 0
+    elif first > second:
+        answer = [route_map[b[(i)%c],b[(i+1)%c]]["travel_time_mins"]for i in range(first,second+c)]
+    else:
+        answer = [route_map[b[(i)%c],b[(i+1)%c]]["travel_time_mins"]for i in range(first,second)]
+    
+    return (answer)
