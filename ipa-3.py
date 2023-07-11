@@ -81,35 +81,35 @@ def tic_tac_toe(board):
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
 
-for i in range (len(board)):
-    if all([letter == "X" for letter in board[i]]): #horizontal/row
-        answer = "X"
-        break
-    elif all([letter == "O" for letter in board[i]]):
-        answer = "O"
-        break
-    elif all([letter == "X" for letter in [board[j][i] for j in range(len(board))]]): #vertical/column
-        answer = "X"
-        break
-    elif all([letter == "O" for letter in [board[j][i] for j in range(len(board))]]):
-        answer = "O"
-        break
-    elif all([letter == "X" for letter in [board[j][j] for j in range(len(board))]]): #diagonals/slashes
-        answer = "X"
-        break
-    elif all([letter == "O" for letter in [board[j][j] for j in range(len(board))]]):
-        answer = "O"
-        break
-    elif all([letter == "X" for letter in [board[i][len(board)-i-1] for j in range(len(board))]]):
-        answer = "X"
-        break
-    elif all([letter == "O" for letter in [board[i][len(board)-i-1] for j in range(len(board))]]):
-        answer = "O"
-        break
-    else:
-        answer = "NO WINNER"
-
-    return (answer)
+    for i in range(len(board)):
+        if all([letter == "X" for letter in board[i]]): #horizontal/row
+            answer = "X"
+            break
+        elif all([letter == "O" for letter in board[i]]):
+            answer = "O" 
+            break
+        elif all([letter == "X" for letter in [board[j][i] for j in range(len(board))]]): #vertical/column
+            answer = "X"
+            break
+        elif all([letter == "O" for letter in [board[j][i] for j in range(len(board))]]):
+            answer = "O"
+            break
+        elif all([letter == "X" for letter in [board[j][j] for j in range(len(board))]]): #diagonal/across
+            answer = "X"
+            break
+        elif all([letter == "O" for letter in [board[j][j] for j in range(len(board))]]):
+            answer = "O"
+            break
+        elif all([letter == "X" for letter in [board[i][len(board)-1-i] for i in range(len(board))]]):
+            answer = "X"
+            break
+        elif all([letter == "O" for letter in [board[i][len(board)-1-i] for i in range(len(board))]]):
+            answer = "O"
+            break
+        else:
+            answer = "NO WINNER"
+    
+    return answer
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
@@ -148,18 +148,18 @@ def eta(first_stop, second_stop, route_map):
     for i in route_map:
         a = [i[0]]
         b += a
-        
+
     first = int(b.index(first_stop))
     second = int(b.index(second_stop))
     
     answer = []
     c = len(route_map)
-    
+
     if first == second:
-        answer = 0
+        return 0
     elif first > second:
-        answer = [route_map[b[(i)%c],b[(i+1)%c]]["travel_time_mins"]for i in range(first,second+c)]
+        answer = [route_map[b[(i) % c], b[(i+1) % c]]["travel_time_mins"]for i in range(first,c + second)]
     else:
-        answer = [route_map[b[(i)%c],b[(i+1)%c]]["travel_time_mins"]for i in range(first,second)]
-    
-    return (answer)
+        answer = [route_map[b[(i) % c], b[(i+1) % c]]["travel_time_mins"]for i in range(first,second)]
+        
+    return sum(answer)
